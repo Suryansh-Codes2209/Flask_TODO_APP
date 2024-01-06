@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>TODO app</title>
+    <link rel="icon" type="image/x-icon" href="static/apple-touch-icon.png">
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        body {
+            background: url("static/bg.svg") center/cover no-repeat;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            font-family: "Arial", sans-serif;
+            background-color: black;
+        }
+
+        .app-container {
+            text-align: center;
+            color: #fff;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top:25px;
+        }
+
+        .app-heading {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+
+        .card-container {
+            display: flex;
+            gap: 20px;
+        }
+
+        .card {
+            width: 300px;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            background-color: #fff;
+        }
+
+        .todo-form {
+            display: flex;
+            flex-direction: column; /* Adjust form layout to column */
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+
+        .todo-input {
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            padding: 8px;
+        }
+
+        .add-button {
+            background-color: #4caf50;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            padding: 8px 12px;
+            cursor: pointer;
+        }
+
+        .task-list {
+            flex: 1;
+            overflow-y: auto;
+            display: flex; /* Add this line */
+            flex-direction: column; /* Add this line */
+        }
+
+        h3, p, span {
+            color: #000;
+            font-size: 14px;
+            font-weight: normal;
+            border-bottom: 1px solid #ccc;
+            padding-bottom: 8px;
+            margin-bottom: 8px; /* Add margin between items in the task list */
+        }
+
+        .button {
+            border: none;
+            border-radius: 5px;
+            padding: 8px 12px;
+            cursor: pointer;
+        }
+
+        .button-update {
+            background-color: #FFDB58; /* Mustard Yellow */
+            color: #fff;
+        }
+
+        .button-delete {
+            background-color: #FF0000; /* Red */
+            color: #fff;
+        }
+
+        .new-div {
+            position: relative;
+            height: 100vh;
+        }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <div class="new-div">
+        <div class="app-heading">Your's TODO:</div>
+        <div class="card-container">
+            <div class="card">
+                <form class="todo-form" action="/add" method="POST">
+                    <input type="text" class="todo-input" placeholder="Todo Title" name="title" />
+                    <button type="submit" class="add-button">Add</button>
+                </form>
+            </div>
+        </div>
+        <hr>
+
+            <div class="card task-list">
+                {% for todo in todo_list %}
+                    <h3>{{ todo.id }}</h3>
+                    <p>{{ todo.title }}</p>
+                    {% if todo.complete == False %}
+                        <span>Not Completed</span>
+                    {% else %}
+                        <span>Completed</span>
+                    {% endif %}
+                    <button onclick="window.location.href='/update/{{ todo.id }}'" class="button button-update">Update</button>
+                    <button onclick="window.location.href='/delete/{{ todo.id }}'" class="button button-delete">Delete</button>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</body>
+</html>
